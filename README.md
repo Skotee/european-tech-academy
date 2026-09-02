@@ -57,6 +57,32 @@ akceptacji calego serwisu.
 (`SEC_E_ILLEGAL_MESSAGE`). To ograniczenie klienta, nie strony — przegladarka
 i `fetch` w Node dzialaja normalnie. Do weryfikacji z terminala uzywaj Node, nie curla.
 
+### Automatyczny deploy po commicie
+
+Repozytorium ma hook `.githooks/post-commit` (wlaczony przez
+`git config core.hooksPath .githooks`), ktory po **kazdym commicie** buduje projekt
+i wypycha go na galaz `prototyp`.
+
+```bash
+git commit -m "zmiana w hero"          # -> build + deploy, ~10 s
+git commit -m "wip [skip deploy]"      # -> commit bez deployu
+```
+
+Pelne wyjscie builda i deployu ladnie w `deploy.log` (poza gitem). Jesli build albo
+deploy padnie, **commit i tak zostaje zapisany** — hook nie blokuje pracy, tylko
+wypisuje ostrzezenie.
+
+Wylaczenie na stale: `git config --unset core.hooksPath`.
+
+Ograniczenia tego podejscia:
+
+- dziala **tylko na tej maszynie** (uzywa lokalnie zapisanego tokenu wranglera),
+- deployuje stan **katalogu roboczego**, nie dokladnie tresc commita,
+- brak logow builda w chmurze i brak podgladow per gałąź.
+
+Docelowo lepszy jest build po stronie Cloudflare (repo na GitHubie + *Connect to Git*),
+ktory buduje w czystym srodowisku i daje historie buildow — wymaga zalozenia repo zdalnego.
+
 ## Przelaczenie domeny — jeszcze NIE zrobione
 
 Domena `europeantechacademy.com` stoi na nameserwerach Zoho
@@ -80,4 +106,5 @@ Kolejnosc jest istotna: rekordy przed zmiana NS.
 - [ ] Wersje jezykowe: `/en`, `/ua`, `/de`
 - [ ] Formularz rejestracji (integracja z Zoho Forms / CRM)
 - [x] Deploy na Cloudflare Pages (galaz prototyp)
+- [x] Automatyczny deploy po commicie (hook post-commit)
 - [ ] Przelaczenie DNS z Zoho na Cloudflare
