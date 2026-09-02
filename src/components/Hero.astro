@@ -1,0 +1,120 @@
+---
+const trust = [
+  { value: "do 100%", label: "dofinansowania kursu" },
+  { value: "4 języki", label: "PL · EN · UA · DE" },
+  { value: "SEP + DIN", label: "uznawane w UE" },
+  { value: "Praktycy", label: "instruktorzy z doświadczeniem" },
+];
+---
+
+<section class="relative isolate overflow-hidden bg-brand-950">
+  <!-- Techniczna siatka + poswiata: buduje "inzynierski" charakter bez zdjec stockowych -->
+  <div
+    class="absolute inset-0 -z-10 opacity-[0.18]"
+    style="background-image:linear-gradient(to right,#93aaff 1px,transparent 1px),linear-gradient(to bottom,#93aaff 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 90% 70% at 50% 0%,black 30%,transparent 78%)"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="absolute -top-40 left-1/2 -z-10 h-[38rem] w-[70rem] -translate-x-1/2 rounded-full opacity-45 blur-3xl"
+    style="background:radial-gradient(closest-side,#1c4fc8,transparent 72%)"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full opacity-30 blur-3xl"
+    style="background:radial-gradient(closest-side,#009efb,transparent 70%)"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="container-eta grid gap-14 py-20 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:py-28">
+    <div>
+      <p
+        class="inline-flex items-center gap-2 rounded-full border border-signal-500/35 bg-signal-500/12 px-3.5 py-1.5 text-xs font-bold tracking-wide text-signal-400 uppercase"
+      >
+        <span class="relative flex size-1.5">
+          <span class="absolute inline-flex size-full animate-ping rounded-full bg-signal-400 opacity-75"></span>
+          <span class="relative inline-flex size-1.5 rounded-full bg-signal-400"></span>
+        </span>
+        Kursy z dofinansowaniem nawet do 100%
+      </p>
+
+      <h1 class="mt-6 text-4xl font-extrabold text-white sm:text-5xl lg:text-[3.65rem] lg:leading-[1.06]">
+        Zawód, certyfikat i praca
+        <span class="block bg-gradient-to-r from-brand-200 via-white to-cyan-brand bg-clip-text text-transparent">
+          w Polsce oraz Unii Europejskiej
+        </span>
+      </h1>
+
+      <p class="mt-6 max-w-xl text-lg leading-relaxed text-brand-100/85">
+        Szkolenia techniczne oparte na realnych potrzebach rynku pracy. Uczymy zawodu, wydajemy
+        certyfikaty uznawane w UE i realnie łączymy z pracodawcami.
+      </p>
+
+      <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+        <a
+          href="/kursy"
+          class="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-6 py-3.5 text-base font-bold text-brand-900 shadow-lg shadow-brand-950/40 transition-all hover:-translate-y-0.5 hover:shadow-xl"
+        >
+          Zobacz kursy
+          <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">&rarr;</span>
+        </a>
+        <a
+          href="/rejestracja"
+          class="inline-flex items-center justify-center rounded-xl border border-white/25 bg-white/5 px-6 py-3.5 text-base font-semibold text-white backdrop-blur-sm transition-colors hover:border-white/45 hover:bg-white/10"
+        >
+          Zapisz się na szkolenie
+        </a>
+      </div>
+
+      <dl class="mt-12 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-white/12 pt-8 sm:grid-cols-4">
+        {
+          trust.map((t) => (
+            <div>
+              <dt class="text-lg font-extrabold text-white sm:text-xl">{t.value}</dt>
+              <dd class="mt-1 text-xs leading-snug text-brand-200/75">{t.label}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <!-- Karta "ktora sciezka dla mnie" — skraca droge do wlasciwej podstrony -->
+    <div class="relative">
+      <div class="rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur-md sm:p-7">
+        <h2 class="text-sm font-bold tracking-[0.14em] text-brand-200 uppercase">
+          Od czego zacząć?
+        </h2>
+        <ul class="mt-5 space-y-2.5">
+          {
+            [
+              { t: "Chcę zdobyć nowy zawód", d: "Kursy z dofinansowaniem z Urzędu Pracy", h: "/kursy" },
+              { t: "Szkolę pracowników firmy", d: "Programy dopasowane do potrzeb zakładu", h: "/kontakt" },
+              { t: "Jestem z Ukrainy", d: "Nauka zawodu i legalna praca w PL i UE", h: "/ua" },
+              { t: "Wolę uczyć się online", d: "Materiały e-learning dostępne 24/7", h: "/kursy#e-learning" },
+            ].map((item) => (
+              <li>
+                <a
+                  href={item.h}
+                  class="group flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 transition-colors hover:border-white/15 hover:bg-white/[0.07]"
+                >
+                  <span class="min-w-0 flex-1">
+                    <span class="block text-sm font-semibold text-white">{item.t}</span>
+                    <span class="mt-0.5 block text-xs text-brand-200/70">{item.d}</span>
+                  </span>
+                  <span
+                    class="shrink-0 text-brand-200 transition-transform group-hover:translate-x-1"
+                    aria-hidden="true"
+                  >
+                    &rarr;
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

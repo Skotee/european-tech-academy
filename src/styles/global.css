@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* Tryb ciemny sterowany atrybutem data-theme na <html> (ustawianym przez skrypt
+   w Base.astro na podstawie localStorage lub preferencji systemu). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  /* --- Marka ETA (wyciagnieta z obecnej strony) --- */
+  --color-brand-50:  #eef3ff;
+  --color-brand-100: #dbe5ff;
+  --color-brand-200: #bccdff;
+  --color-brand-300: #93aaff;
+  --color-brand-400: #6a80fa;
+  --color-brand-500: #1c4fc8;
+  --color-brand-600: #163f9f;
+  --color-brand-700: #12337f;
+  --color-brand-800: #0e2760;
+  --color-brand-900: #0b1f4d;
+  --color-brand-950: #061230;
+
+  /* Akcent techniczny */
+  --color-cyan-brand: #009efb;
+
+  /* Kolor sygnalowy dla dofinansowania / korzysci */
+  --color-signal-400: #fbbf24;
+  --color-signal-500: #f59e0b;
+  --color-signal-600: #d97706;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  --radius-card: 1rem;
+
+  /* Skala odstepow sekcji */
+  --spacing-section: 5.5rem;
+
+  --shadow-card: 0 1px 2px rgb(11 31 77 / 0.04), 0 8px 24px -12px rgb(11 31 77 / 0.18);
+  --shadow-card-hover: 0 2px 4px rgb(11 31 77 / 0.06), 0 18px 40px -16px rgb(11 31 77 / 0.28);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --- Tokeny semantyczne: jasny motyw jako baza --- */
+:root {
+  --surface:        #ffffff;
+  --surface-muted:  #f6f8fc;
+  --surface-raised: #ffffff;
+  --border-subtle:  #e3e9f4;
+  --text-strong:    #0b1f4d;
+  --text-body:      #3f4b66;
+  --text-muted:     #6b7791;
+  --on-brand:       #ffffff;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --surface:        #070d1c;
+  --surface-muted:  #0c1428;
+  --surface-raised: #111b34;
+  --border-subtle:  #1e2c4b;
+  --text-strong:    #f2f6ff;
+  --text-body:      #c2ccdf;
+  --text-muted:     #8e9bb5;
+  --on-brand:       #ffffff;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-raised: var(--surface-raised);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-strong: var(--text-strong);
+  --color-text-body: var(--text-body);
+  --color-text-muted: var(--text-muted);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--text-body);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    color: var(--text-strong);
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cyan-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-eta {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) { padding-inline: 2rem; }
+}
+
+/* Delikatne wejscie sekcji przy scrollu */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s var(--ease-out-soft), transform 0.6s var(--ease-out-soft);
+}
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
+}

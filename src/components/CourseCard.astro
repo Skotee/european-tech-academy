@@ -1,0 +1,57 @@
+---
+import type { Course } from "../data/courses";
+
+interface Props {
+  course: Course;
+}
+const { course } = Astro.props;
+---
+
+<article
+  id={course.id}
+  class:list={[
+    "reveal group relative flex scroll-mt-24 flex-col overflow-hidden rounded-card border bg-surface-raised p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover",
+    course.featured
+      ? "border-brand-300 dark:border-brand-600"
+      : "border-border-subtle hover:border-brand-300 dark:hover:border-brand-500",
+  ]}
+>
+  {
+    course.featured && (
+      <span class="absolute top-0 right-6 rounded-b-md bg-brand-600 px-2.5 py-1 text-[0.65rem] font-bold tracking-wider text-white uppercase">
+        Najczęściej wybierany
+      </span>
+    )
+  }
+
+  <p class="text-xs font-bold tracking-[0.1em] text-brand-600 uppercase dark:text-brand-300">
+    {course.category}
+  </p>
+  <h3 class="mt-2.5 text-xl leading-snug font-extrabold">{course.title}</h3>
+  <p class="mt-3 text-sm leading-relaxed text-text-muted">{course.summary}</p>
+
+  <ul class="mt-5 flex flex-wrap gap-2">
+    {
+      course.facts.map((f) => (
+        <li class="rounded-md bg-surface-muted px-2.5 py-1 text-xs font-medium text-text-body">
+          {f}
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="mt-6 flex grow items-end gap-3 border-t border-border-subtle pt-5">
+    <a
+      href={`/kursy#${course.id}`}
+      class="text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-300"
+    >
+      Szczegóły kursu
+    </a>
+    <a
+      href="/rejestracja"
+      class="ml-auto rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+    >
+      Zapisz się
+    </a>
+  </div>
+</article>

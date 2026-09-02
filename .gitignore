@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.scratch/
+.env
+.wrangler/
+
+# logi automatycznego deployu
+deploy.log

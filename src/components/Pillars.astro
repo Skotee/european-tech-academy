@@ -1,0 +1,92 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+const pillars = [
+  {
+    audience: "Dla osób bezrobotnych",
+    title: "Podnoszenie kwalifikacji i nowy zawód",
+    body:
+      "Pomagamy wybrać zawód i kurs, przechodzimy z Tobą formalności przy zapisach i dokumentach, a po szkoleniu wspieramy w znalezieniu zatrudnienia.",
+    cta: { label: "Sprawdź kursy", href: "/kursy" },
+    icon: "badge",
+  },
+  {
+    audience: "Dla pracodawców i firm",
+    title: "Szkolenia dopasowane do potrzeb zakładu",
+    body:
+      "Budujemy program pod realne stanowiska i maszyny w Państwa firmie — od uprawnień SEP, przez operatorów maszyn, po standardy niemieckie.",
+    cta: { label: "Porozmawiajmy", href: "/kontakt" },
+    icon: "factory",
+  },
+  {
+    audience: "Dla obywateli Ukrainy",
+    title: "Ucz się zawodu i pracuj legalnie w PL i UE",
+    body:
+      "Praktyczne szkolenia techniczne zakończone certyfikatem i kwalifikacjami uznawanymi w Unii Europejskiej. Możliwe dofinansowanie kursu nawet do 100%.",
+    cta: { label: "Детальніше", href: "/ua" },
+    icon: "globe",
+  },
+  {
+    audience: "E-Learning",
+    title: "Ucz się online — kiedy chcesz i gdzie chcesz",
+    body:
+      "Nowoczesne kursy e-learningowe: materiały dostępne 24/7, nauka we własnym tempie, wsparcie instruktorów i praktyczne zadania.",
+    cta: { label: "Zobacz ofertę online", href: "/kursy#e-learning" },
+    icon: "monitor",
+  },
+];
+
+const paths: Record<string, string> = {
+  badge: "M12 3 4.5 6.5v5c0 4.4 3.1 8.3 7.5 9.5 4.4-1.2 7.5-5.1 7.5-9.5v-5L12 3Zm-2.2 8.6 1.8 1.8 3.4-3.6",
+  factory: "M3 20h18M5 20v-7l5 3v-3l5 3V7l4-2v15",
+  globe: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18",
+  monitor: "M3 5h18v11H3zM9 20h6M12 16v4",
+};
+---
+
+<section class="bg-surface py-section">
+  <div class="container-eta">
+    <SectionHeading
+      eyebrow="Czym się zajmujemy?"
+      title="Uczymy zawodu, szkolimy i skutecznie łączymy z pracodawcami w UE"
+      lead="Cztery ścieżki, jeden cel: kwalifikacje, które są rozpoznawane przez pracodawców w Polsce i za granicą."
+    />
+
+    <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        pillars.map((p) => (
+          <article class="reveal group flex flex-col rounded-card border border-border-subtle bg-surface-raised p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover dark:hover:border-brand-500">
+            <span class="inline-flex size-11 items-center justify-center rounded-xl bg-brand-50 text-brand-600 transition-colors group-hover:bg-brand-600 group-hover:text-white dark:bg-brand-900/60 dark:text-brand-200">
+              <svg
+                class="size-5.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d={paths[p.icon]} />
+              </svg>
+            </span>
+
+            <p class="mt-5 text-xs font-bold tracking-[0.1em] text-text-muted uppercase">
+              {p.audience}
+            </p>
+            <h3 class="mt-2 text-lg leading-snug font-bold">{p.title}</h3>
+            <p class="mt-3 grow text-sm leading-relaxed text-text-muted">{p.body}</p>
+
+            <a
+              href={p.cta.href}
+              class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-300"
+            >
+              {p.cta.label}
+              <span class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">&rarr;</span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

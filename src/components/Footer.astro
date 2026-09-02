@@ -1,0 +1,90 @@
+---
+const cols = [
+  {
+    title: "Szkolenia",
+    links: [
+      { label: "Wszystkie kursy", href: "/kursy" },
+      { label: "Elektryk SEP G1", href: "/kursy#sep-g1" },
+      { label: "Elektryk wg normy DIN", href: "/kursy#elektryk-din" },
+      { label: "Operatorzy maszyn", href: "/kursy#operatorzy" },
+      { label: "E-Learning", href: "/kursy#e-learning" },
+    ],
+  },
+  {
+    title: "Akademia",
+    links: [
+      { label: "O nas", href: "/o-nas" },
+      { label: "Aktualności", href: "/aktualnosci" },
+      { label: "Galeria", href: "/galeria" },
+      { label: "Kariera", href: "/kariera" },
+      { label: "FAQ", href: "/faq" },
+    ],
+  },
+  {
+    title: "Dokumenty",
+    links: [
+      { label: "Polityka prywatności", href: "/polityka-prywatnosci" },
+      { label: "Regulamin strony", href: "/regulamin-strony" },
+      { label: "Regulamin szkoleń", href: "/regulamin-szkolen" },
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-border-subtle bg-surface-muted">
+  <div class="container-eta py-14">
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(3,1fr)]">
+      <div>
+        <div class="flex items-center gap-2.5">
+          <img src="/logo-eta.png" alt="" width="40" height="40" class="h-10 w-auto" />
+          <span class="text-[0.95rem] leading-tight font-extrabold text-text-strong">
+            European<br /><span class="text-brand-600 dark:text-brand-300">Tech Academy</span>
+          </span>
+        </div>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">
+          Szkolenia techniczne oparte na realnych potrzebach rynku pracy w Polsce i Europie.
+        </p>
+        <a
+          href="/kontakt"
+          class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:text-brand-700 dark:text-brand-300"
+        >
+          Skontaktuj się z nami
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+
+      {
+        cols.map((col) => (
+          <div>
+            <h2 class="text-xs font-bold tracking-[0.14em] text-text-muted uppercase">{col.title}</h2>
+            <ul class="mt-4 space-y-2.5">
+              {col.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    class="text-sm text-text-body transition-colors hover:text-brand-600 dark:hover:text-brand-300"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-3 border-t border-border-subtle pt-6 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {year} European Tech Academy. Wszelkie prawa zastrzeżone.</p>
+      <p class="flex flex-wrap gap-x-4 gap-y-1">
+        <span>Kursy z dofinansowaniem do 100%</span>
+        <span aria-hidden="true" class="hidden sm:inline">&middot;</span>
+        <span>Certyfikaty uznawane w UE</span>
+      </p>
+    </div>
+  </div>
+</footer>

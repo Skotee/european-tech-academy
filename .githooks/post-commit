@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# Po kazdym commicie buduje strone i wypycha ja na Cloudflare Pages
+# (galaz "prototyp" -> https://prototyp.eta-www.pages.dev).
+#
+# Wlaczone przez: git config core.hooksPath .githooks
+# Pominiecie deployu dla jednego commita: git commit -m "wip [skip deploy]"
+# Wylaczenie na stale:  git config --unset core.hooksPath
+
+set -e
+
+ROOT=$(git rev-parse --show-toplevel)
+cd "$ROOT"
+
+MSG=$(git log -1 --pretty=%B)
+SHA=$(git rev-parse HEAD)
+SHORT=$(git rev-parse --short HEAD)
+LOG="$ROOT/deploy.log"
+
+case "$MSG" in
+  *"[skip deploy]"*)
+    echo "post-commit: pomijam deploy ([skip deploy])"
+    exit 0
+    ;;
+esac
+
+echo "post-commit: buduje i wypycham na Cloudflare Pages..."
+
+{
+  echo "===================================================================="
+  echo "$(date '+%Y-%m-%d %H:%M:%S')  commit $SHORT  $MSG"
+  echo "===================================================================="
+} >> "$LOG"
+
+if npm run build >> "$LOG" 2>&1; then
+  if npx wrangler pages deploy dist \
+      --project-name eta-www \
+      --branch prototyp \
+      --commit-hash "$SHA" \
+      --commit-message "$MSG" \
+      --commit-dirty=true >> "$LOG" 2>&1; then
+    URL=$(grep -o 'https://[a-z0-9.-]*\.pages\.dev' "$LOG" | tail -1)
+    echo "post-commit: OK -> ${URL:-https://prototyp.eta-www.pages.dev}"
+  else
+    echo "post-commit: DEPLOY NIE UDAL SIE. Szczegoly: deploy.log"
+    echo "             (commit zostal zapisany, strona nie zostala zmieniona)"
+  fi
+else
+  echo "post-commit: BUILD NIE PRZESZEDL. Szczegoly: deploy.log"
+  echo "             (commit zostal zapisany, deploy pominiety)"
+fi
+
+exit 0

@@ -1,0 +1,27 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+import CourseCard from "./CourseCard.astro";
+import { courses } from "../data/courses";
+---
+
+<section id="kursy" class="scroll-mt-20 bg-surface-muted py-section">
+  <div class="container-eta">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <SectionHeading
+        eyebrow="Nasza oferta"
+        title="Nowe technologie i klasyczne zawody"
+        lead="Kwalifikacje zawodowe nawet przy 100% dofinansowaniu — ze szkoleń finansowanych przez Urząd Pracy lub fundusze unijne."
+      />
+      <a
+        href="/kursy"
+        class="shrink-0 rounded-xl border border-border-subtle bg-surface-raised px-5 py-3 text-sm font-semibold text-text-strong transition-colors hover:border-brand-300 hover:text-brand-700 dark:hover:text-brand-200"
+      >
+        Wszystkie kursy
+      </a>
+    </div>
+
+    <div class="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {courses.map((course) => <CourseCard course={course} />)}
+    </div>
+  </div>
+</section>

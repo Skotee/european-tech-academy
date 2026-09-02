@@ -1,0 +1,55 @@
+---
+import SectionHeading from "./SectionHeading.astro";
+
+/* Kroki odwzorowuja to, co ETA obiecuje dzisiaj w sekcji o wsparciu uczestnika. */
+const steps = [
+  {
+    title: "Wybór zawodu i kursu",
+    body: "Rozmawiamy o Twoim doświadczeniu i sytuacji na rynku, a potem wskazujemy kurs, który faktycznie da Ci pracę.",
+  },
+  {
+    title: "Wsparcie formalne",
+    body: "Pomagamy przy zapisach, dokumentach i wniosku o dofinansowanie z Urzędu Pracy lub funduszy unijnych.",
+  },
+  {
+    title: "Szkolenie i egzamin",
+    body: "Teoria plus praktyka u instruktorów-praktyków, a na końcu przygotowanie do egzaminu i certyfikat uznawany w UE.",
+  },
+  {
+    title: "Wsparcie w zatrudnieniu",
+    body: "Po kursie nie zostawiamy Cię samego — łączymy z pracodawcami w Polsce i innych krajach Unii.",
+  },
+];
+---
+
+<section class="bg-surface py-section">
+  <div class="container-eta">
+    <SectionHeading
+      eyebrow="Jak to działa"
+      title="Od pierwszej rozmowy do pracy w zawodzie"
+      lead="Cztery kroki, przez które przechodzimy razem z każdym uczestnikiem."
+      align="center"
+    />
+
+    <ol class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        steps.map((s, i) => (
+          <li class="reveal relative">
+            <!-- Linia laczaca kroki, tylko na szerokich ekranach -->
+            {i < steps.length - 1 && (
+              <span
+                class="absolute top-5 left-11 hidden h-px w-[calc(100%-1.5rem)] bg-gradient-to-r from-brand-300 to-transparent lg:block dark:from-brand-700"
+                aria-hidden="true"
+              />
+            )}
+            <span class="relative flex size-10 items-center justify-center rounded-full bg-brand-600 text-sm font-extrabold text-white">
+              {i + 1}
+            </span>
+            <h3 class="mt-5 text-base font-bold">{s.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-text-muted">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

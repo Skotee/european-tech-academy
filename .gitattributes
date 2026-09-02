@@ -1,0 +1,6 @@
+* text=auto eol=lf
+
+# Hooki musza miec koncowki LF, inaczej sh na Windows ich nie wykona.
+.githooks/* text eol=lf
+
+*.png binary
