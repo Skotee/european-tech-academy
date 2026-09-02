@@ -1,9 +1,12 @@
 # European Tech Academy — frontend
 
 Nowy frontend dla `europeantechacademy.com`. Statyczna strona: **Astro + Tailwind CSS 4**,
-docelowo hostowana na **Cloudflare Pages**.
+hostowana jako Worker ze statycznymi assetami na **Cloudflare**.
 
 Zastępuje obecną stronę na Zoho Sites 2.0 (zamknięty kreator, brak dostępu do szablonów).
+
+**Nowy komputer / nowe konto GitHub?** Zacznij od [SETUP.md](SETUP.md) — krok po kroku,
+z pułapkami, na które już się natknęliśmy.
 
 ## Uruchomienie lokalnie
 
