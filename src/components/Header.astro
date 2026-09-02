@@ -23,8 +23,8 @@ const langs = [
   <div class="container-eta flex h-18 items-center gap-4">
     <a href="/" class="flex shrink-0 items-center gap-2.5" aria-label="European Tech Academy — strona główna">
       <img src="/logo-eta.png" alt="" width="40" height="40" class="h-10 w-auto" />
-      <span class="hidden text-[0.95rem] leading-tight font-extrabold text-white sm:block">
-        European<br /><span class="text-purple-100">Tech Academy</span>
+      <span class="hidden text-[0.95rem] leading-tight font-extrabold text-red-600 sm:block">
+        European<br /><span class="text-red-600">Tech Academy</span>
       </span>
     </a>
 
@@ -33,7 +33,7 @@ const langs = [
         nav.map((item) => (
           <a
             href={item.href}
-            class="rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-purple-700 hover:text-white"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-purple-700 hover:text-red-100"
           >
             {item.label}
           </a>
@@ -46,7 +46,7 @@ const langs = [
       <div class="relative hidden sm:block" data-lang-menu>
         <button
           type="button"
-          class="flex items-center gap-1.5 rounded-lg border border-white/40 px-2.5 py-2 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-purple-700"
+          class="flex items-center gap-1.5 rounded-lg border border-white/40 px-2.5 py-2 text-sm font-semibold text-red-600 transition-colors hover:border-white hover:bg-purple-700"
           aria-expanded="false"
           aria-haspopup="true"
           data-lang-trigger
@@ -79,7 +79,7 @@ const langs = [
       <!-- Motyw jasny / ciemny -->
       <button
         type="button"
-        class="rounded-lg border border-white/40 p-2 text-white transition-colors hover:border-white hover:bg-purple-700"
+        class="rounded-lg border border-white/40 p-2 text-red-600 transition-colors hover:border-white hover:bg-purple-700"
         aria-label="Przełącz motyw jasny/ciemny"
         data-theme-toggle
       >
@@ -94,14 +94,14 @@ const langs = [
 
       <a
         href="/rejestracja"
-        class="hidden rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-purple-700 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-purple-50 hover:shadow-md md:inline-flex"
+        class="hidden rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-red-600 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-purple-50 hover:shadow-md md:inline-flex"
       >
         Zapisz się
       </a>
 
       <button
         type="button"
-        class="rounded-lg border border-white/40 p-2 text-white lg:hidden"
+        class="rounded-lg border border-white/40 p-2 text-red-600 lg:hidden"
         aria-label="Otwórz menu"
         aria-expanded="false"
         data-menu-toggle
