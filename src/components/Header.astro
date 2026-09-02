@@ -18,13 +18,13 @@ const langs = [
 ---
 
 <header
-  class="sticky top-0 z-50 border-b border-border-subtle bg-surface/85 backdrop-blur-md supports-backdrop-filter:bg-surface/70"
+  class="sticky top-0 z-50 border-b border-red-800 bg-red-600 backdrop-blur-md supports-backdrop-filter:bg-red-600/90"
 >
   <div class="container-eta flex h-18 items-center gap-4">
     <a href="/" class="flex shrink-0 items-center gap-2.5" aria-label="European Tech Academy — strona główna">
       <img src="/logo-eta.png" alt="" width="40" height="40" class="h-10 w-auto" />
-      <span class="hidden text-[0.95rem] leading-tight font-extrabold text-text-strong sm:block">
-        European<br /><span class="text-brand-600 dark:text-brand-300">Tech Academy</span>
+      <span class="hidden text-[0.95rem] leading-tight font-extrabold text-white sm:block">
+        European<br /><span class="text-red-100">Tech Academy</span>
       </span>
     </a>
 
@@ -33,7 +33,7 @@ const langs = [
         nav.map((item) => (
           <a
             href={item.href}
-            class="rounded-lg px-3 py-2 text-sm font-medium text-text-body transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-brand-900/50 dark:hover:text-brand-200"
+            class="rounded-lg px-3 py-2 text-sm font-medium text-white/90 transition-colors hover:bg-red-700 hover:text-white"
           >
             {item.label}
           </a>
@@ -46,7 +46,7 @@ const langs = [
       <div class="relative hidden sm:block" data-lang-menu>
         <button
           type="button"
-          class="flex items-center gap-1.5 rounded-lg border border-border-subtle px-2.5 py-2 text-sm font-semibold text-text-body transition-colors hover:border-brand-300 hover:text-brand-700 dark:hover:text-brand-200"
+          class="flex items-center gap-1.5 rounded-lg border border-white/40 px-2.5 py-2 text-sm font-semibold text-white transition-colors hover:border-white hover:bg-red-700"
           aria-expanded="false"
           aria-haspopup="true"
           data-lang-trigger
@@ -79,7 +79,7 @@ const langs = [
       <!-- Motyw jasny / ciemny -->
       <button
         type="button"
-        class="rounded-lg border border-border-subtle p-2 text-text-body transition-colors hover:border-brand-300 hover:text-brand-700 dark:hover:text-brand-200"
+        class="rounded-lg border border-white/40 p-2 text-white transition-colors hover:border-white hover:bg-red-700"
         aria-label="Przełącz motyw jasny/ciemny"
         data-theme-toggle
       >
@@ -94,14 +94,14 @@ const langs = [
 
       <a
         href="/rejestracja"
-        class="hidden rounded-lg bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-md md:inline-flex"
+        class="hidden rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-red-700 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-red-50 hover:shadow-md md:inline-flex"
       >
         Zapisz się
       </a>
 
       <button
         type="button"
-        class="rounded-lg border border-border-subtle p-2 text-text-body lg:hidden"
+        class="rounded-lg border border-white/40 p-2 text-white lg:hidden"
         aria-label="Otwórz menu"
         aria-expanded="false"
         data-menu-toggle
