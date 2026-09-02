@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Nazwa Workera — musi byc taka sama jak "Project name" w kreatorze Cloudflare.
+  "name": "eta-www",
+  "compatibility_date": "2026-09-02",
+
+  // Strona jest w calosci statyczna: brak skryptu Workera, same pliki z build'a.
+  // Naglowki (m.in. noindex z public/_headers) Cloudflare czyta z tego katalogu.
+  "assets": {
+    "directory": "./dist"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
