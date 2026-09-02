@@ -36,53 +36,50 @@ Tokeny semantyczne (`--surface`, `--text-strong`, `--border-subtle`...) maja war
 motywu jasnego i ciemnego. Motyw ustawia sie na `<html data-theme>` skryptem inline
 w `Base.astro` (przed pierwszym paintem, zeby nie migalo), z zapisem w `localStorage`.
 
-## Deploy na Cloudflare Pages
+## Deploy na Cloudflare (Workers Static Assets)
 
-Build i deploy robi **Cloudflare** po kazdym pushu do repozytorium
-https://github.com/Skotee/european-tech-academy (projekt Pages: `eta-www`).
+Strona dziala jako **Worker ze statycznymi assetami** — nie ma zadnego kodu Workera
+("main" w konfiguracji), Cloudflare serwuje wylacznie pliki z `dist/`.
 
-Strona jest w calosci statyczna — zadnych Pages Functions, bindingow ani kodu
-serwerowego. Dlatego w repo **nie ma** pliku `wrangler.jsonc`: dla Pages musialby
-zawierac `pages_build_output_dir`, a jego obecnosc czyni pola w panelu tylko do
-odczytu. Konfiguracja builda siedzi wiec w panelu Cloudflare.
+Konfiguracja jest w repo, w `wrangler.jsonc`: nazwa `eta-www`, `assets.directory`
+wskazuje `./dist`, wlaczona obserwowalnosc.
 
-W repo nie ma workflow, hooka ani tokenu. W kreatorze Cloudflare (*Workers & Pages* >
-*Create* > *Connect to Git*) ustawiamy tylko:
-
-| Pole w kreatorze | Wartosc |
+| Cel | Adres |
 | --- | --- |
-| Project name | `eta-www` |
-| Production branch | `main` (NIE `master` — ta galaz zawiera tylko stary README) |
-| Framework preset | None (komenda buildu podana recznie) |
+| Produkcja | https://eta-www.europeantechacademy.workers.dev |
+
+### Wdrozenie reczne
+
+```bash
+npm run build
+npx wrangler deploy            # wdraza
+npx wrangler deploy --dry-run  # tylko walidacja, bez wysylki
+```
+
+### Wdrozenie automatyczne po pushu
+
+Przez **Workers Builds**: w panelu Cloudflare wejdz w Workera `eta-www` >
+*Settings* > *Build* > podlacz repozytorium
+https://github.com/Skotee/european-tech-academy i ustaw:
+
+| Pole | Wartosc |
+| --- | --- |
+| Branch | `main` |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Wersja Node | z pliku `.node-version` (22) |
+| Deploy command | `npx wrangler deploy` |
 
-Prototyp jest chroniony przed indeksowaniem plikiem `public/_headers` (Pages go obsluguje), ktory nadaje
-**kazdemu** adresowi naglowek `X-Robots-Tag: noindex, nofollow`. Dziala to niezaleznie
-od tego, ktora galaz jest produkcyjna, wiec Google nie zaindeksuje prototypu i nie
-zacznie on konkurowac z prawdziwa strona.
+Wazne: aplikacja GitHub Cloudflare musi miec dostep do tego repozytorium
+(*github.com/settings/installations*), inaczej webhooki nie beda dostarczane —
+build recznie z API zadziala, a automatyczny nie powstanie wcale.
 
-**W dniu uruchomienia strony produkcyjnej trzeba usunac `public/_headers`.**
+### Ograniczenie, ktore z tego wynika
 
-| Cel | Jak | Adres |
-| --- | --- | --- |
-| Aktualny stan pracy | `git push` na `main` | https://eta-www.pages.dev |
-| Podglad galezi / PR | push na inna galaz | https://<galaz>.eta-www.pages.dev |
+Workers wymagaja **aktywnej strefy DNS w Cloudflare** do jakiejkolwiek domeny wlasnej
+(zarowno Custom Domains, jak i Routes) — nie obsluguja zewnetrznego DNS. Poniewaz
+`europeantechacademy.com` stoi dzis na nameserwerach Zoho, **nie da sie wystawic
+strony pod wlasna domena (nawet pod subdomena) przed przeniesieniem strefy**
+do Cloudflare. Szczegoly nizej.
 
-Kazda galaz i kazdy pull request dostaje wlasny adres podgladowy, a poprzednie
-wersje mozna przywrocic z panelu Cloudflare (*Deployments* > *Rollback*).
-
-### Czego tu celowo nie ma
-
-Build i deploy naleza do Cloudflare, wiec z repo usunieto konkurencyjne mechanizmy
-(kazda zmiana wdrazala sie wczesniej dwukrotnie):
-
-- `.github/workflows/deploy.yml` (GitHub Actions budowal i wypychal recznie),
-- `.githooks/post-commit` (wdrazal po kazdym lokalnym commicie),
-- skrypty `npm run deploy` i `npm run deploy:prod`.
-
-Sekret `CLOUDFLARE_API_TOKEN` w ustawieniach repo jest juz zbedny — mozna go odwolac.
 
 ### Uwaga o TLS na Windows
 
@@ -108,11 +105,13 @@ Kolejnosc jest istotna: rekordy przed zmiana NS.
 ## Status
 
 - [x] Design system + tryb ciemny
-- [x] Strona glowna (prototyp do oceny) — https://eta-www.pages.dev
+- [x] Strona glowna (prototyp do oceny) — https://eta-www.europeantechacademy.workers.dev
 - [ ] Podstrony: kursy, o-nas, kontakt, rejestracja, kariera, faq, galeria, regulaminy
 - [ ] Blog `/aktualnosci` (Astro Content Collections)
 - [ ] Wersje jezykowe: `/en`, `/ua`, `/de`
 - [ ] Formularz rejestracji (integracja z Zoho Forms / CRM)
 - [x] Build i deploy po stronie Cloudflare (Connect to Git)
 - [ ] Usunac public/_headers (noindex) w dniu uruchomienia
-- [ ] Przelaczenie DNS z Zoho na Cloudflare
+- [ ] Podlaczenie Workers Builds (automatyczny deploy po pushu)
+- [ ] Usuniecie starego projektu Pages eta-www
+- [ ] Przeniesienie strefy DNS z Zoho do Cloudflare (wymagane dla domeny wlasnej)
