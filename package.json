@@ -7,9 +7,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check",
-    "deploy": "astro build && wrangler pages deploy dist --project-name eta-www --branch prototyp --commit-dirty=true",
-    "deploy:prod": "astro build && wrangler pages deploy dist --project-name eta-www --branch main --commit-dirty=true"
+    "check": "astro check"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.4",
