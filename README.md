@@ -57,7 +57,29 @@ akceptacji calego serwisu.
 (`SEC_E_ILLEGAL_MESSAGE`). To ograniczenie klienta, nie strony — przegladarka
 i `fetch` w Node dzialaja normalnie. Do weryfikacji z terminala uzywaj Node, nie curla.
 
-### Automatyczny deploy po commicie
+### Automatyczny deploy z GitHuba (docelowy)
+
+Repo zdalne: https://github.com/Skotee/european-tech-academy (galaz `main`).
+
+Workflow `.github/workflows/deploy.yml` po kazdym **pushu na `main`** buduje projekt
+w czystym srodowisku i wypycha go na galaz `prototyp`. Reczne wdrozenie na produkcje:
+zakladka *Actions* > *Deploy na Cloudflare Pages* > *Run workflow* > zaznacz **produkcja**.
+
+Wymaga **jednego sekretu** w repozytorium
+(*Settings > Secrets and variables > Actions*):
+
+| Sekret | Wartosc |
+| --- | --- |
+| `CLOUDFLARE_API_TOKEN` | token z uprawnieniem *Account > Cloudflare Pages > Edit* |
+
+Account ID jest wpisany wprost w workflow — nie jest sekretem.
+
+Uwaga: projekt Pages `eta-www` powstal jako **Direct Upload**, a Cloudflare nie pozwala
+przekonwertowac go na projekt polaczony z Gitem. Dlatego build robi GitHub Actions,
+a nie Cloudflare. Gdybysmy chcieli buildy po stronie Cloudflare, trzeba zalozyc **nowy**
+projekt Pages przez *Connect to Git* — kosztem zmiany adresu `*.pages.dev`.
+
+### Automatyczny deploy po commicie (lokalny)
 
 Repozytorium ma hook `.githooks/post-commit` (wlaczony przez
 `git config core.hooksPath .githooks`), ktory po **kazdym commicie** buduje projekt
@@ -80,8 +102,8 @@ Ograniczenia tego podejscia:
 - deployuje stan **katalogu roboczego**, nie dokladnie tresc commita,
 - brak logow builda w chmurze i brak podgladow per gałąź.
 
-Docelowo lepszy jest build po stronie Cloudflare (repo na GitHubie + *Connect to Git*),
-ktory buduje w czystym srodowisku i daje historie buildow — wymaga zalozenia repo zdalnego.
+Hook i workflow GitHub Actions **robia to samo**. Gdy CI zacznie dzialac, wylacz hook,
+zeby nie wdrazac dwa razy: `git config --unset core.hooksPath`.
 
 ## Przelaczenie domeny — jeszcze NIE zrobione
 

@@ -1,0 +1,79 @@
+name: Deploy na Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      produkcja:
+        description: "Wdrozyc na produkcje (eta-www.pages.dev) zamiast na prototyp?"
+        type: boolean
+        default: false
+
+# Dwa pushe pod rzad = liczy sie tylko ostatni.
+concurrency:
+  group: cloudflare-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      # Account ID nie jest sekretem — sekretem jest wylacznie token.
+      CLOUDFLARE_ACCOUNT_ID: b8da311aed43186d11de1c0e1c6d2a77
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Instalacja zaleznosci
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Wybor galezi docelowej
+        id: target
+        run: |
+          if [ "${{ inputs.produkcja }}" = "true" ]; then
+            echo "branch=main" >> "$GITHUB_OUTPUT"
+            echo "Cel: PRODUKCJA (eta-www.pages.dev)"
+          else
+            echo "branch=prototyp" >> "$GITHUB_OUTPUT"
+            echo "Cel: prototyp (prototyp.eta-www.pages.dev, noindex)"
+          fi
+
+      - name: Deploy na Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::error::Brak sekretu CLOUDFLARE_API_TOKEN w ustawieniach repozytorium."
+            echo "Dodaj go w: Settings > Secrets and variables > Actions > New repository secret"
+            exit 1
+          fi
+          npx wrangler pages deploy dist \
+            --project-name eta-www \
+            --branch "${{ steps.target.outputs.branch }}" \
+            --commit-hash "$GITHUB_SHA" \
+            --commit-message "$(git log -1 --pretty=%s)"
+
+      - name: Podsumowanie
+        run: |
+          {
+            echo "### Deploy zakonczony"
+            echo ""
+            echo "- Galaz Pages: \`${{ steps.target.outputs.branch }}\`"
+            if [ "${{ steps.target.outputs.branch }}" = "main" ]; then
+              echo "- Adres: https://eta-www.pages.dev"
+            else
+              echo "- Adres: https://prototyp.eta-www.pages.dev"
+            fi
+            echo "- Commit: \`${GITHUB_SHA:0:7}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
