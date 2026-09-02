@@ -5,8 +5,8 @@ hostowana jako Worker ze statycznymi assetami na **Cloudflare**.
 
 Zastępuje obecną stronę na Zoho Sites 2.0 (zamknięty kreator, brak dostępu do szablonów).
 
-**Nowy komputer / nowe konto GitHub?** Zacznij od [SETUP.md](SETUP.md) — krok po kroku,
-z pułapkami, na które już się natknęliśmy.
+**Chcesz zmienić coś na stronie?** Zobacz [SETUP.md](SETUP.md) — jak dać agentowi
+dostęp do repo i poprosić go o zmianę, bez ręcznego builda czy wdrożenia.
 
 ## Uruchomienie lokalnie
 
