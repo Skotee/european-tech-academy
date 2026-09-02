@@ -48,19 +48,20 @@ Cala konfiguracja siedzi w panelu Cloudflare:
 | --- | --- |
 | Build command | `npm run build` |
 | Output directory | `dist` |
-| Production branch | `production` (celowo nieistniejaca na razie) |
+| Production branch | `main` |
 | Wersja Node | z pliku `.node-version` (22) |
 
-Skad taka galaz produkcyjna: dzieki temu **kazdy push na `main` tworzy deployment
-podgladowy**, ktoremu Cloudflare automatycznie dodaje `x-robots-tag: noindex`.
-Prototyp nie trafi wiec do Google i nie bedzie konkurowal z prawdziwa strona.
-Gdy serwis bedzie gotowy, wystarczy utworzyc galaz `production` — i to ona stanie
-sie strona produkcyjna.
+Prototyp jest chroniony przed indeksowaniem plikiem `public/_headers`, ktory nadaje
+**kazdemu** adresowi naglowek `X-Robots-Tag: noindex, nofollow`. Dziala to niezaleznie
+od tego, ktora galaz jest produkcyjna, wiec Google nie zaindeksuje prototypu i nie
+zacznie on konkurowac z prawdziwa strona.
+
+**W dniu uruchomienia strony produkcyjnej trzeba usunac `public/_headers`.**
 
 | Cel | Jak | Adres |
 | --- | --- | --- |
-| Podglad biezacej pracy | `git push` na `main` | https://main.eta-www.pages.dev |
-| Produkcja | utworzyc galaz `production` | https://eta-www.pages.dev |
+| Aktualny stan pracy | `git push` na `main` | https://eta-www.pages.dev |
+| Podglad galezi / PR | push na dowolna inna galaz | https://<galaz>.eta-www.pages.dev |
 
 Kazda galaz i kazdy pull request dostaje wlasny adres podgladowy, a poprzednie
 wersje mozna przywrocic z panelu Cloudflare (*Deployments* > *Rollback*).
@@ -100,10 +101,11 @@ Kolejnosc jest istotna: rekordy przed zmiana NS.
 ## Status
 
 - [x] Design system + tryb ciemny
-- [x] Strona glowna (prototyp do oceny) — https://main.eta-www.pages.dev
+- [x] Strona glowna (prototyp do oceny) — https://eta-www.pages.dev
 - [ ] Podstrony: kursy, o-nas, kontakt, rejestracja, kariera, faq, galeria, regulaminy
 - [ ] Blog `/aktualnosci` (Astro Content Collections)
 - [ ] Wersje jezykowe: `/en`, `/ua`, `/de`
 - [ ] Formularz rejestracji (integracja z Zoho Forms / CRM)
 - [x] Build i deploy po stronie Cloudflare (Connect to Git)
+- [ ] Usunac public/_headers (noindex) w dniu uruchomienia
 - [ ] Przelaczenie DNS z Zoho na Cloudflare

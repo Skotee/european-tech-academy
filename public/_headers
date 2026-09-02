@@ -1,0 +1,6 @@
+# Dopoki serwis jest prototypem, ZADEN adres nie moze trafic do wyszukiwarek —
+# inaczej prototyp zaczalby konkurowac z europeantechacademy.com w wynikach Google.
+#
+# TEN PLIK NALEZY USUNAC W DNIU URUCHOMIENIA STRONY PRODUKCYJNEJ.
+/*
+  X-Robots-Tag: noindex, nofollow
