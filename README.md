@@ -58,9 +58,8 @@ npx wrangler deploy --dry-run  # tylko walidacja, bez wysylki
 
 ### Wdrozenie automatyczne po pushu
 
-Przez **Workers Builds**: w panelu Cloudflare wejdz w Workera `eta-www` >
-*Settings* > *Build* > podlacz repozytorium
-https://github.com/Skotee/european-tech-academy i ustaw:
+Dziala przez **Workers Builds** — push na `main` uruchamia build i wdrozenie.
+Konfiguracja w panelu (Worker `eta-www` > *Settings* > *Build*):
 
 | Pole | Wartosc |
 | --- | --- |
@@ -112,6 +111,6 @@ Kolejnosc jest istotna: rekordy przed zmiana NS.
 - [ ] Formularz rejestracji (integracja z Zoho Forms / CRM)
 - [x] Build i deploy po stronie Cloudflare (Connect to Git)
 - [ ] Usunac public/_headers (noindex) w dniu uruchomienia
-- [ ] Podlaczenie Workers Builds (automatyczny deploy po pushu)
+- [x] Podlaczenie Workers Builds (automatyczny deploy po pushu)
 - [ ] Usuniecie starego projektu Pages eta-www
 - [ ] Przeniesienie strefy DNS z Zoho do Cloudflare (wymagane dla domeny wlasnej)
