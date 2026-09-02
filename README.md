@@ -36,39 +36,39 @@ Tokeny semantyczne (`--surface`, `--text-strong`, `--border-subtle`...) maja war
 motywu jasnego i ciemnego. Motyw ustawia sie na `<html data-theme>` skryptem inline
 w `Base.astro` (przed pierwszym paintem, zeby nie migalo), z zapisem w `localStorage`.
 
-## Deploy na Cloudflare (Workers Static Assets)
+## Deploy na Cloudflare Pages
 
 Build i deploy robi **Cloudflare** po kazdym pushu do repozytorium
-https://github.com/Skotee/european-tech-academy (Worker: `eta-www`).
+https://github.com/Skotee/european-tech-academy (projekt Pages: `eta-www`).
 
-Strona jest w calosci statyczna, wiec nie ma zadnego kodu Workera — Cloudflare serwuje
-wylacznie pliki z `dist/` (Workers Static Assets). Konfiguracja jest w `wrangler.jsonc`,
-czyli w repo, a nie tylko w panelu.
+Strona jest w calosci statyczna — zadnych Pages Functions, bindingow ani kodu
+serwerowego. Dlatego w repo **nie ma** pliku `wrangler.jsonc`: dla Pages musialby
+zawierac `pages_build_output_dir`, a jego obecnosc czyni pola w panelu tylko do
+odczytu. Konfiguracja builda siedzi wiec w panelu Cloudflare.
 
 W repo nie ma workflow, hooka ani tokenu. W kreatorze Cloudflare (*Workers & Pages* >
 *Create* > *Connect to Git*) ustawiamy tylko:
 
 | Pole w kreatorze | Wartosc |
 | --- | --- |
-| Project name | `eta-www` (musi zgadzac sie z `name` w `wrangler.jsonc`) |
+| Project name | `eta-www` |
+| Production branch | `main` (NIE `master` — ta galaz zawiera tylko stary README) |
+| Framework preset | None (komenda buildu podana recznie) |
 | Build command | `npm run build` |
-| Deploy command | `npx wrangler deploy` (domyslne) |
+| Build output directory | `dist` |
 | Wersja Node | z pliku `.node-version` (22) |
 
-Katalogu wyjsciowego **nie** podaje sie w kreatorze — bierze go `wrangler.jsonc`
-z pola `assets.directory`.
-
-Prototyp jest chroniony przed indeksowaniem plikiem `public/_headers` (Workers Static
-Assets go obsluguje), ktory nadaje
+Prototyp jest chroniony przed indeksowaniem plikiem `public/_headers` (Pages go obsluguje), ktory nadaje
 **kazdemu** adresowi naglowek `X-Robots-Tag: noindex, nofollow`. Dziala to niezaleznie
 od tego, ktora galaz jest produkcyjna, wiec Google nie zaindeksuje prototypu i nie
 zacznie on konkurowac z prawdziwa strona.
 
 **W dniu uruchomienia strony produkcyjnej trzeba usunac `public/_headers`.**
 
-Adres produkcyjny to `https://eta-www.<subdomena-konta>.workers.dev` — dokladny
-zobaczysz w panelu po pierwszym wdrozeniu. Gałęzie inne niz `main` dostaja wlasne
-adresy podgladowe (opcja *Builds for non-production branches* w kreatorze).
+| Cel | Jak | Adres |
+| --- | --- | --- |
+| Aktualny stan pracy | `git push` na `main` | https://eta-www.pages.dev |
+| Podglad galezi / PR | push na inna galaz | https://<galaz>.eta-www.pages.dev |
 
 Kazda galaz i kazdy pull request dostaje wlasny adres podgladowy, a poprzednie
 wersje mozna przywrocic z panelu Cloudflare (*Deployments* > *Rollback*).
